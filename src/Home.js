@@ -1,20 +1,36 @@
 import React from 'react';
+const lowercaseKeys = require('lowercase-keys')
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       sol: '',
+      date: '',
+      avgTemp: '',
+      avgWind: '',
+      windDir: '',
+      avgPress: '',
     }
   }
   componentDidMount() {
     fetch('https://api.nasa.gov/insight_weather/?api_key=OyLOo9G478lVuhrN6gW5Yxxba0YhGHHeSHaVvCj0&feedtype=json&ver=1.0')
       .then(res => res.json())
       .then(json => {
-        const sol = json.sol_keys[0]
+        lowercaseKeys(json)
+        const sol = json.sol_keys[0];
+        const date = json[sol].First_UTC;
+        const avgTemp = json[sol].AT.av;
+        const avgWind = json[sol].HWS.av;
+        const windDir = json[sol].WD.most_common.compass_point;
+        const avgPress = json[sol].PRE.av;
         this.setState({
           sol: sol,
-
+          date: date,
+          avgTemp: avgTemp,
+          avgWind: avgWind,
+          windDir: windDir,
+          avgPress: avgPress
         })
       });
   }
