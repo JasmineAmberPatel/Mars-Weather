@@ -1,5 +1,8 @@
 import React from 'react';
+import Moment from 'moment';
+
 const lowercaseKeys = require('lowercase-keys')
+
 
 class Home extends React.Component {
   constructor(props) {
@@ -18,7 +21,7 @@ class Home extends React.Component {
       .then(res => res.json())
       .then(json => {
         lowercaseKeys(json)
-        const sol = json.sol_keys[0];
+        const sol = json.sol_keys[6];
         const date = json[sol].First_UTC;
         const avgTemp = json[sol].AT.av;
         const avgWind = json[sol].HWS.av;
@@ -39,11 +42,14 @@ class Home extends React.Component {
     console.log(this.state)
     return (
       <div className="App">
-        <ul>
-          {}
-        </ul>
-
-      </div>
+        <h1>Mars Weather Forecast</h1>
+          <p>Sol: {this.state.sol}</p>
+          <p>Date: {Moment(this.state.date).format('ddd Do MMM')}</p>
+          <p>Average Temperature: {this.state.avgTemp} °C</p>
+          <p>Average Wind Speed: {this.state.avgWind} mph</p>
+          <p>Wind Direction: {this.state.windDir}</p>
+          <p>Average Pressure: {this.state.avgPress} Pa</p>
+    </div>
     );
   }
 }
