@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import store from './store';
 import './index.css';
 import Home from './Home';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <Home />
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById('root')
 );
 
